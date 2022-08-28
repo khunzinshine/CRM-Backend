@@ -7,10 +7,12 @@ export const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
+    const hashConfirmPassword = bcrypt.hashSync(req.body.confirmPassword, salt);
 
     const newUser = new User({
       ...req.body,
       password: hash,
+      confirmPassword: hashConfirmPassword,
     });
 
     await newUser.save();
