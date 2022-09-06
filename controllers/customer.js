@@ -57,12 +57,9 @@ export const getCustomers = async (req, res, next) => {
       option = { $or: regexQuery };
     }
     const total = await Customer.find(option).countDocuments();
-    // const skip = req.query.skip || 0;
-    // const limit = req.query.limit || 5;
     const customers = await Customer.find(option, {}, { skip, limit }).sort({
       createdAt: -1,
     });
-    // const users = await User.find().skip(skip).limit(limit);
     res.status(200).json({ data: customers, total: total });
   } catch (err) {
     next(err);
